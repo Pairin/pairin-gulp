@@ -195,7 +195,10 @@ module.exports = (ENV) => {
     })
 
     gulp.task('upload-styles', function() {
-        return gulp.src(path.resolve(process.cwd(), ['./src/styles/**/*', '!./src/styles/variables.scss']))
+        return gulp.src([
+                    path.resolve(process.cwd(), './src/styles/**/*'),
+                    `!${path.resolve(process.cwd(), './src/styles/variables.scss')}`
+                ])
                 .pipe(rename((path) => {
                     path.dirname = `styles/${process.env.NODE_ENV}/${ENV.EnvironmentName}/${path.dirname}`;
                 }))
