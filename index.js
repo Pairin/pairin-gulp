@@ -166,7 +166,7 @@ module.exports = (ENV) => {
             /\.(jpeg|jpg|png|gif|svg)$/
         ]]);
 
-        return gulp.src(path.resolve(process.cwd(), file, { base: './src' }))
+        return gulp.src(path.resolve(process.cwd(), file), { base: './src' })
                 .pipe(babel(babelconfig))
                 .on('error', handleError)
                 .pipe(gulp.dest(path.resolve(process.cwd(), 'server/')))
