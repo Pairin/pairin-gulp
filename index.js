@@ -157,7 +157,7 @@ module.exports = (ENV) => {
     gulp.task('build-server', function() {
         const file = argv.file || 'src/**/*.{js,json}';
 
-        const babelconfig = JSON.parse(fs.readFileSync('./.babelrc', "utf8"));
+        const babelconfig = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), '.babelrc'), "utf8"));
 
         babelconfig.presets = ["react", "es2015", "stage-2"];
 
