@@ -16,7 +16,7 @@
     "url": "https://github.com/Pairin/pairin-gulp/issues"
   },
   "homepage": "https://github.com/Pairin/pairin-gulp#readme",
-  "devDependencies": {
+  "dependencies": {
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-remove-imports": "https://github.com/sebmak/babel-plugin-remove-import/archive/1.0.0.tar.gz",
