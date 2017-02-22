@@ -18,7 +18,7 @@ const AWS_SDK = require('aws-sdk');
 const print = require('gulp-debug');
 const through2 = require('through2');
 
-module.exports = (baseDir, ENV) => {
+module.exports = (ENV) => {
     process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || 'development');
 
     const s3 = new AWS_SDK.S3();
@@ -130,19 +130,19 @@ module.exports = (baseDir, ENV) => {
     }
 
     gulp.task('build-client', function() {
-        return gulp.src(path.resolve(baseDir, 'src/client.js'))
+        return gulp.src(path.resolve(process.cwd(), 'src/client.js'))
             .pipe(named())
             .pipe(handleWebpack())
             .on('error', handleError)
-            .pipe(gulp.dest(path.resolve(baseDir, 'dist/')))
+            .pipe(gulp.dest(path.resolve(process.cwd(), 'dist/')))
             .pipe(print({title: 'Client Output'}));
     });
 
     gulp.task('fontello', function () {
-      return gulp.src(path.resolve(baseDir, 'fontello.json'))
+      return gulp.src(path.resolve(process.cwd(), 'fontello.json'))
         .pipe(fontello({
-            font: path.resolve(baseDir, '../src/fonts/fontello'),
-            css: path.resolve(baseDir, '../src/styles/fontello'),
+            font: path.resolve(process.cwd(), '../src/fonts/fontello'),
+            css: path.resolve(process.cwd(), '../src/styles/fontello'),
             assetsOnly: true
         }))
         .pipe(rename(function (path) {
@@ -150,7 +150,7 @@ module.exports = (baseDir, ENV) => {
                 path.extname = '.scss';
             }
         }))
-        .pipe(gulp.dest(path.resolve(baseDir, 'dist/')))
+        .pipe(gulp.dest(path.resolve(process.cwd(), 'dist/')))
         .pipe(print({title: 'Fontello Output'}));
     });
 
@@ -166,10 +166,10 @@ module.exports = (baseDir, ENV) => {
             /\.(jpeg|jpg|png|gif|svg)$/
         ]]);
 
-        return gulp.src(path.resolve(baseDir, file, { base: './src' }))
+        return gulp.src(path.resolve(process.cwd(), file, { base: './src' }))
                 .pipe(babel(babelconfig))
                 .on('error', handleError)
-                .pipe(gulp.dest(path.resolve(baseDir, 'server/')))
+                .pipe(gulp.dest(path.resolve(process.cwd(), 'server/')))
                 .pipe(print({title: 'Server Output'}));
     });
 
@@ -184,18 +184,18 @@ module.exports = (baseDir, ENV) => {
 
     gulp.task('bundle', function() {
         return gulp.src([
-            path.resolve(baseDir, 'server*/**'),
-            path.resolve(baseDir, 'dist*/**'),
-            path.resolve(baseDir, 'index.js'),
-            path.resolve(baseDir, 'package.json'),
-            path.resolve(baseDir, 'npm-shrinkwrap.json'),
-            path.resolve(baseDir, '.ebextensions*/**'),
+            path.resolve(process.cwd(), 'server*/**'),
+            path.resolve(process.cwd(), 'dist*/**'),
+            path.resolve(process.cwd(), 'index.js'),
+            path.resolve(process.cwd(), 'package.json'),
+            path.resolve(process.cwd(), 'npm-shrinkwrap.json'),
+            path.resolve(process.cwd(), '.ebextensions*/**'),
         ]).pipe(archiver('bundle.zip'))
-        .pipe(gulp.dest(baseDir))
+        .pipe(gulp.dest(process.cwd()))
     })
 
     gulp.task('upload-styles', function() {
-        return gulp.src(path.resolve(baseDir, ['./src/styles/**/*', '!./src/styles/variables.scss']))
+        return gulp.src(path.resolve(process.cwd(), ['./src/styles/**/*', '!./src/styles/variables.scss']))
                 .pipe(rename((path) => {
                     path.dirname = 'styles/' + process.env.NODE_ENV + '/whitelabel/' + path.dirname;
                 }))
@@ -211,7 +211,7 @@ module.exports = (baseDir, ENV) => {
     })
 
     gulp.task('upload-assets', function() {
-        return gulp.src(path.resolve(baseDir, './dist/**/*'))
+        return gulp.src(path.resolve(process.cwd(), './dist/**/*'))
                 .pipe(rename({
                     dirname: process.env.NODE_ENV + '/whitelabel/'
                 }))
@@ -219,7 +219,7 @@ module.exports = (baseDir, ENV) => {
                 .pipe(through2.obj(function(file, enc, cb) {
                     s3.putObject({
                         Bucket: 'assets.pairin.com',
-                        Key: path.relative(path.resolve(baseDir, './dist'), file.path),
+                        Key: path.relative(path.resolve(process.cwd(), './dist'), file.path),
                         Body: file.contents,
                         ACL: 'public-read'
                     }, cb)
@@ -227,13 +227,13 @@ module.exports = (baseDir, ENV) => {
     });
 
     gulp.task('upload-manifest', function() {
-        return gulp.src(path.resolve(baseDir, './sass-manifest.json'))
+        return gulp.src(path.resolve(process.cwd(), './sass-manifest.json'))
                     .pipe(rename(`${ENV.EnvironmentName}-manifest.${process.env.NODE_ENV}.json`))
                     .pipe(print({title: 'Upload Manifest'}))
                     .pipe(through2.obj(function(file, enc, cb) {
                         s3.putObject({
                             Bucket: 'pairin-deployments',
-                            Key: path.relative(baseDir, file.path),
+                            Key: path.relative(process.cwd(), file.path),
                             Body: file.contents,
                             ACL: 'bucket-owner-full-control'
                         }, cb)
@@ -255,7 +255,7 @@ module.exports = (baseDir, ENV) => {
                     s3.putObject({
                         Bucket: 'pairin-deployments',
                         Key: `${version}.zip`,
-                        Body: fs.readFileSync(path.resolve(baseDir, './bundle.zip')),
+                        Body: fs.readFileSync(path.resolve(process.cwd(), './bundle.zip')),
                         ACL: 'bucket-owner-full-control'
                     }, (err) => {
                         if (err) {
@@ -336,9 +336,9 @@ module.exports = (baseDir, ENV) => {
 
     gulp.task('clean', function() {
         return del([
-            path.resolve(baseDir, 'bundle.zip'),
-            path.resolve(baseDir, './dist'),
-            path.resolve(baseDir, './server')
+            path.resolve(process.cwd(), 'bundle.zip'),
+            path.resolve(process.cwd(), './dist'),
+            path.resolve(process.cwd(), './server')
         ]);
     })
 
@@ -381,9 +381,9 @@ module.exports = (baseDir, ENV) => {
     )
 
     gulp.task('watch', "Watch for file changes", ['fontello', 'build-client', 'build-server'], function() {
-        let buildWatcher = gulp.watch(path.resolve(baseDir, 'src/**/*.{js,json}'), ['build-client']);
-        gulp.watch(path.resolve(baseDir, 'src/**/*.{less,scss,css,jpeg,jpg,png,gif}'), ['build-client']);
-        gulp.watch(path.resolve(baseDir, 'fontello.json'), ['fontello']);
+        let buildWatcher = gulp.watch(path.resolve(process.cwd(), 'src/**/*.{js,json}'), ['build-client']);
+        gulp.watch(path.resolve(process.cwd(), 'src/**/*.{less,scss,css,jpeg,jpg,png,gif}'), ['build-client']);
+        gulp.watch(path.resolve(process.cwd(), 'fontello.json'), ['fontello']);
 
         buildWatcher.on('change', function(event) {
             argv.file = event.path;
