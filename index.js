@@ -196,8 +196,8 @@ module.exports = (ENV) => {
 
     gulp.task('upload-styles', function() {
         return gulp.src([
-                    path.resolve(process.cwd(), './src/styles/**/*'),
-                    `!${path.resolve(process.cwd(), './src/styles/variables.scss')}`
+                    'src/**/*.{scss,css}',
+                    `!*/variables.scss`
                 ])
                 .pipe(rename((path) => {
                     path.dirname = `styles/${process.env.NODE_ENV}/${ENV.EnvironmentName}/${path.dirname}`;
@@ -206,7 +206,7 @@ module.exports = (ENV) => {
                 .pipe(through2.obj(function(file, enc, cb) {
                     s3.putObject({
                         Bucket: 'pairin-deployments',
-                        Key: path.relative('./src/styles', file.path),
+                        Key: path.relative('./src', file.path),
                         Body: file.contents,
                         ACL: 'bucket-owner-full-control'
                     }, cb)
