@@ -270,7 +270,7 @@ module.exports = (ENV) => {
                 })
             })
             .then((version) => {
-                const environmentName = ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
+                const environmentName = 'pairin-' + ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
                 gutil.log('Upload', gutil.colors.blue(`Checking if the environment ${environmentName} exists`));
                 return new Promise((resolve, reject) => {
                     eb.describeEnvironments({
@@ -309,7 +309,7 @@ module.exports = (ENV) => {
                 })
             })
             .then((version) => {
-                const environmentName = ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
+                const environmentName = 'pairin-' + ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
                 gutil.log('Upload', gutil.colors.blue(`Updating environment ${environmentName}`));
                 return new Promise((resolve, reject) => {
                     eb.updateEnvironment({
