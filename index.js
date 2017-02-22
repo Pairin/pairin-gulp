@@ -197,7 +197,7 @@ module.exports = (ENV) => {
     gulp.task('upload-styles', function() {
         return gulp.src(path.resolve(process.cwd(), ['./src/styles/**/*', '!./src/styles/variables.scss']))
                 .pipe(rename((path) => {
-                    path.dirname = 'styles/' + process.env.NODE_ENV + '/whitelabel/' + path.dirname;
+                    path.dirname = `styles/${process.env.NODE_ENV}/${ENV.EnvironmentName}/${path.dirname}`;
                 }))
                 .pipe(print({title: 'Upload Styles'}))
                 .pipe(through2.obj(function(file, enc, cb) {
@@ -213,7 +213,7 @@ module.exports = (ENV) => {
     gulp.task('upload-assets', function() {
         return gulp.src(path.resolve(process.cwd(), './dist/**/*'))
                 .pipe(rename({
-                    dirname: process.env.NODE_ENV + '/whitelabel/'
+                    dirname: `${process.env.NODE_ENV}/${ENV.EnvironmentName}/`
                 }))
                 .pipe(print({title: 'Upload Assets'}))
                 .pipe(through2.obj(function(file, enc, cb) {
@@ -228,7 +228,7 @@ module.exports = (ENV) => {
 
     gulp.task('upload-manifest', function() {
         return gulp.src(path.resolve(process.cwd(), './sass-manifest.json'))
-                    .pipe(rename(`${ENV.EnvironmentName}-manifest.${process.env.NODE_ENV}.json`))
+                    .pipe(rename(`pairin-${ENV.EnvironmentName}-manifest.${process.env.NODE_ENV}.json`))
                     .pipe(print({title: 'Upload Manifest'}))
                     .pipe(through2.obj(function(file, enc, cb) {
                         s3.putObject({
@@ -351,7 +351,7 @@ module.exports = (ENV) => {
                     Paths: {
                         Quantity: 1,
                         Items: [
-                            '/' + process.env.NODE_ENV + '/whitelabel/*'
+                            `/${process.env.NODE_ENV}/${ENV.EnvironmentName}/*`
                         ]
                     }
                 }
