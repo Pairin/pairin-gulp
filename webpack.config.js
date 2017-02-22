@@ -1,6 +1,7 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const SassManifest = require('sass-manifest-webpack-plugin');
+const fs = require('fs');
 
 module.exports = {
     output: {
@@ -16,7 +17,19 @@ module.exports = {
             {
                 test: /\.(sass|css|scss)$/,
                 exclude: /node_modules/,
-                loader: ExtractTextPlugin.extract(['css-loader', 'postcss-loader', 'sass-loader'])
+                loader: ExtractTextPlugin.extract({
+                    loader: [
+                        {
+                            loader: 'css-loader'
+                        },
+                        {
+                            loader: 'postcss-loader'
+                        },
+                        {
+                            loader: 'sass-loader'
+                        }
+                    ]
+                })
             },
             {
                 test: /\.js$/,

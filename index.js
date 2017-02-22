@@ -368,11 +368,18 @@ module.exports = (ENV) => {
         })
     })
 
+    gulp.task('copy-public', function() {
+        return gulp.src(path.resolve(process.cwd(), 'public/**/*'))
+            .pipe(gulp.dest(path.resolve(process.cwd(), 'dist/')))
+            .pipe(print({title: 'Public File Output'}));
+    })
+
     gulp.task('deploy',
         'Deploy the Application to AWS',
         function(cb) {
             runSequence(
                 'clean',
+                'copy-public',
                 'build',
                 'upload-assets',
                 'bundle',
@@ -383,10 +390,11 @@ module.exports = (ENV) => {
         }
     )
 
-    gulp.task('watch', "Watch for file changes", ['fontello', 'build-client', 'build-server'], function() {
+    gulp.task('watch', "Watch for file changes", ['copy-public','fontello', 'build-client', 'build-server'], function() {
         let buildWatcher = gulp.watch(path.resolve(process.cwd(), 'src/**/*.{js,json}'), ['build-client']);
         gulp.watch(path.resolve(process.cwd(), 'src/**/*.{less,scss,css,jpeg,jpg,png,gif}'), ['build-client']);
         gulp.watch(path.resolve(process.cwd(), 'fontello.json'), ['fontello']);
+        gulp.watch(path.resolve(process.cwd(), 'public/**/*'), ['copy-public']);
 
         buildWatcher.on('change', function(event) {
             argv.file = event.path;
