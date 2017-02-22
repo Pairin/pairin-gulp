@@ -1,7 +1,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-var SassManifest = require('sass-manifest-webpack-plugin');
-
+const SassManifest = require('sass-manifest-webpack-plugin');
 
 module.exports = {
     output: {
@@ -46,12 +45,12 @@ module.exports = {
     },
     resolve: {
         modules: [
-            path.resolve(__dirname, './src'),
+            path.resolve(process.cwd(), './src'),
             "node_modules"
         ]
     },
     plugins: [
         new ExtractTextPlugin({ filename: '[name].css', disable: false, allChunks: true }),
-        new SassManifest({filename: path.resolve(__dirname, './sass-manifest.json')})
+        new SassManifest({filename: path.resolve(process.cwd(), './sass-manifest.json')})
     ]
 }

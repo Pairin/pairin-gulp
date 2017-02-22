@@ -32,7 +32,7 @@ module.exports = (baseDir, ENV) => {
             'title': 'Pairin Build Error',
             'message': err.message
         });
-        console.log(err.toString());
+        gutil.log(gutil.colors.red(err.toString()));
         this.emit('end');
     }
 
@@ -40,7 +40,6 @@ module.exports = (baseDir, ENV) => {
         return new Promise((resolve, reject) => {
             eb.describeApplicationVersions({}, (err, data) => {
                 if (err) {
-                    console.log(err);
                     reject(err);
                     return;
                 }
@@ -229,10 +228,9 @@ module.exports = (baseDir, ENV) => {
 
     gulp.task('upload-manifest', function() {
         return gulp.src(path.resolve(baseDir, './sass-manifest.json'))
-                    .pipe(rename("pairin-whitelabel-manifest."+process.env.NODE_ENV+".json"))
+                    .pipe(rename(`${ENV.EnvironmentName}-manifest.${process.env.NODE_ENV}.json`))
                     .pipe(print({title: 'Upload Manifest'}))
                     .pipe(through2.obj(function(file, enc, cb) {
-                        console.log(path.relative(baseDir, file.path));
                         s3.putObject({
                             Bucket: 'pairin-deployments',
                             Key: path.relative(baseDir, file.path),
@@ -269,7 +267,7 @@ module.exports = (baseDir, ENV) => {
                 })
             })
             .then((version) => {
-                const environmentName = 'pairin-whitelabel' + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
+                const environmentName = ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
                 gutil.log('Upload', gutil.colors.blue(`Checking if the environment ${environmentName} exists`));
                 return new Promise((resolve, reject) => {
                     eb.describeEnvironments({
@@ -308,7 +306,7 @@ module.exports = (baseDir, ENV) => {
                 })
             })
             .then((version) => {
-                const environmentName = 'pairin-whitelabel' + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
+                const environmentName = ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
                 gutil.log('Upload', gutil.colors.blue(`Updating environment ${environmentName}`));
                 return new Promise((resolve, reject) => {
                     eb.updateEnvironment({
@@ -394,4 +392,6 @@ module.exports = (baseDir, ENV) => {
     });
 
     gulp.task('default', ['help']);
+
+    return gulp;
 }
