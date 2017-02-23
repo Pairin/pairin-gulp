@@ -17,7 +17,22 @@ module.exports = {
             {
                 test: /\.(sass|css|scss)$/,
                 exclude: /node_modules/,
-                use: ExtractTextPlugin.extract(['css-loader','postcss-loader','sass-loader'])
+                use: ExtractTextPlugin.extract({
+                    use: [
+                        {
+                            loader: 'css-loader'
+                        },
+                        {
+                            loader: 'postcss-loader'
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                includePaths: [path.resolve(process.cwd(), './src')]
+                            }
+                        }
+                    ]
+                })
             },
             {
                 test: /\.js$/,
