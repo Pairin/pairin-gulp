@@ -18,8 +18,9 @@ const AWS_SDK = require('aws-sdk');
 const print = require('gulp-debug');
 const through2 = require('through2');
 
+process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || 'development');
+
 module.exports = (ENV) => {
-    process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || 'development');
 
     const s3 = new AWS_SDK.S3();
     const eb = new AWS_SDK.ElasticBeanstalk({
@@ -310,7 +311,7 @@ module.exports = (ENV) => {
             })
             .then((version) => {
                 const environmentName = 'pairin-' + ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
-                gutil.log('Upload', gutil.colors.blue(`Updating environment ${environmentName}`));
+                gutil.log('Upload', gutil.colors.blue(`Updating environment ${environmentName} to version ${version}`));
                 return new Promise((resolve, reject) => {
                     eb.updateEnvironment({
                         EnvironmentName: environmentName,
