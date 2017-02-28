@@ -258,7 +258,7 @@ module.exports = (ENV) => {
                 return new Promise((resolve, reject) => {
                     s3.putObject({
                         Bucket: 'pairin-deployments',
-                        Key: `${version}.zip`,
+                        Key: `${ENV.EnvironmentName}/${version}.zip`,
                         Body: fs.readFileSync(path.resolve(process.cwd(), './bundle.zip')),
                         ACL: 'bucket-owner-full-control'
                     }, (err) => {
@@ -298,7 +298,7 @@ module.exports = (ENV) => {
                         VersionLabel: version,
                         SourceBundle: {
                             S3Bucket: 'pairin-deployments',
-                            S3Key: `${version}.zip`
+                            S3Key: `${ENV.EnvironmentName}/${version}.zip`
                         }
                     }, (err, results) => {
                         if (err && err.code !== 'InvalidParameterValue') {
