@@ -395,15 +395,33 @@ module.exports = (ENV) => {
         }
     )
 
+    gulp.task('clean-server', function() {
+        let file = argv.file || 'server/**/*.{js,json}';
+
+        if (argv.file) {
+            file = file.replace('src/', 'server/');
+        }
+
+        return gulp.src(file)
+                    .pipe(clean({force:true}));
+    })
+
     gulp.task('watch', "Watch for file changes", ['copy-public','fontello-client', 'build-server'], function() {
-        let buildWatcher = gulp.watch(path.resolve(process.cwd(), 'src/**/*.{js,json}'), ['build-client']);
-        gulp.watch(path.resolve(process.cwd(), 'src/**/*.{less,scss,css,jpeg,jpg,png,gif}'), ['build-client']);
-        gulp.watch(path.resolve(process.cwd(), 'fontello.json'), ['fontello-client']);
-        gulp.watch(path.resolve(process.cwd(), 'public/**/*'), ['copy-public']);
+        let buildWatcher = gulp.watch(['src/**/*.{js,json}','src/*.{js,json}'], ['build-client']);
+        gulp.watch('src/**/*.{less,scss,css,jpeg,jpg,png,gif}', ['build-client']);
+        gulp.watch('fontello.json', ['fontello-client']);
+        gulp.watch('public/**/*', ['copy-public']);
 
         buildWatcher.on('change', function(event) {
             argv.file = event.path;
-            gulp.start.apply(gulp, ['build-server']);
+
+            let run = ['build-server'];
+
+            if (event.type === 'deleted') {
+                run = ['clean-server'];
+            }
+
+            gulp.start.apply(gulp, run);
         })
     });
 
