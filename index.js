@@ -143,20 +143,33 @@ module.exports = (ENV) => {
 
     gulp.task('fontello-client', ['fontello'], runClient);
 
-    gulp.task('fontello', function () {
-      return gulp.src(path.resolve(process.cwd(), 'fontello.json'))
-        .pipe(fontello({
-            font: path.resolve(process.cwd(), '../src/fonts/fontello'),
-            css: path.resolve(process.cwd(), '../src/styles/fontello'),
-            assetsOnly: true
-        }))
-        .pipe(rename(function (path) {
-            if (path.extname === '.css') {
-                path.extname = '.scss';
-            }
-        }))
-        .pipe(gulp.dest(path.resolve(process.cwd(), 'dist/')))
-        .pipe(print({title: 'Fontello Output'}));
+    gulp.task('fetch-fontello', function() {
+        return gulp.src('fontello.json', {base: process.cwd()})
+            .pipe(fontello({
+                font: 'src/fonts/fontello',
+                css: 'src/styles/fontello',
+                assetsOnly: true
+            }))
+            .pipe(rename(function (p) {
+                if (p.extname === '.css') {
+                    p.extname = '.scss';
+                }
+            }))
+            .pipe(gulp.dest(process.cwd()))
+            .pipe(print({title: 'Fontello Output'}));
+    })
+
+    gulp.task('copy-fonts', function() {
+        return gulp.src('src/fonts/**/*', {base: process.cwd()})
+                .pipe(gulp.dest('dist/fonts'));
+    })
+
+    gulp.task('fontello', function (cb) {
+        runSequence(
+            'fetch-fontello',
+            'copy-fonts',
+            cb
+        )
     });
 
     gulp.task('build-server', function() {
@@ -374,7 +387,7 @@ module.exports = (ENV) => {
     })
 
     gulp.task('copy-public', function() {
-        return gulp.src(path.resolve(process.cwd(), 'public/**/*'))
+        return gulp.src(path.resolve(process.cwd(), 'src/public/**/*'))
             .pipe(gulp.dest(path.resolve(process.cwd(), 'dist/')))
             .pipe(print({title: 'Public File Output'}));
     })
