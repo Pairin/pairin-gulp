@@ -130,14 +130,18 @@ module.exports = (ENV) => {
         })
     }
 
-    gulp.task('build-client', function() {
+    const runClient = () => {
         return gulp.src(path.resolve(process.cwd(), 'src/client.js'))
             .pipe(named())
             .pipe(handleWebpack())
             .on('error', handleError)
             .pipe(gulp.dest(path.resolve(process.cwd(), 'dist/')))
             .pipe(print({title: 'Client Output'}));
-    });
+    }
+
+    gulp.task('build-client', runClient);
+
+    gulp.task('fontello-client', ['fontello'], runClient);
 
     gulp.task('fontello', function () {
       return gulp.src(path.resolve(process.cwd(), 'fontello.json'))
@@ -176,7 +180,7 @@ module.exports = (ENV) => {
 
     gulp.task('build',
         "Build the application",
-        ['fontello', 'build-client', 'build-server'],
+        ['copy-public','fontello-client', 'build-server'],
         function(){},
         {
             'production': 'build the application for production'
@@ -391,10 +395,10 @@ module.exports = (ENV) => {
         }
     )
 
-    gulp.task('watch', "Watch for file changes", ['copy-public','fontello', 'build-client', 'build-server'], function() {
+    gulp.task('watch', "Watch for file changes", ['copy-public','fontello-client', 'build-server'], function() {
         let buildWatcher = gulp.watch(path.resolve(process.cwd(), 'src/**/*.{js,json}'), ['build-client']);
         gulp.watch(path.resolve(process.cwd(), 'src/**/*.{less,scss,css,jpeg,jpg,png,gif}'), ['build-client']);
-        gulp.watch(path.resolve(process.cwd(), 'fontello.json'), ['fontello']);
+        gulp.watch(path.resolve(process.cwd(), 'fontello.json'), ['fontello-client']);
         gulp.watch(path.resolve(process.cwd(), 'public/**/*'), ['copy-public']);
 
         buildWatcher.on('change', function(event) {
