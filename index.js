@@ -20,6 +20,14 @@ const through2 = require('through2');
 
 process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || 'development');
 
+const getBabelConfig = () => {
+    try {
+        return JSON.parse(fs.readFileSync(path.resolve(process.cwd(), '.babelrc'), "utf8"));
+    } catch (e) {
+        return {};
+    }
+}
+
 module.exports = (ENV, clean=true) => {
 
     const s3 = new AWS_SDK.S3();
@@ -178,9 +186,11 @@ module.exports = (ENV, clean=true) => {
     gulp.task('build-server', function() {
         const file = argv.file || 'src/**/*.{js,json}';
 
-        const babelconfig = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), '.babelrc'), "utf8"));
+        const babelconfig = getBabelConfig();
 
         babelconfig.presets = ["react", "es2015", "stage-2"];
+
+        babelconfig.plugins = babelconfig.plugins || [];
 
         babelconfig.plugins.push(["babel-plugin-remove-imports", [
             /\.(less|css|sass|scss)$/,
