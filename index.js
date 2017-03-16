@@ -20,7 +20,7 @@ const through2 = require('through2');
 
 process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || 'development');
 
-module.exports = (ENV) => {
+module.exports = (ENV, clean=true) => {
 
     const s3 = new AWS_SDK.S3();
     const eb = new AWS_SDK.ElasticBeanstalk({
@@ -161,6 +161,9 @@ module.exports = (ENV) => {
 
     gulp.task('copy-fonts', function() {
         return gulp.src('src/fonts/**/*', {base: process.cwd()})
+                .pipe(rename((p) => {
+                    p.dirname=path.relative('src/fonts', p.dirname);
+                }))
                 .pipe(gulp.dest('dist/fonts'));
     })
 
@@ -355,12 +358,16 @@ module.exports = (ENV) => {
         }
     )
 
-    gulp.task('clean', function() {
-        return del([
-            path.resolve(process.cwd(), 'bundle.zip'),
-            path.resolve(process.cwd(), './dist'),
-            path.resolve(process.cwd(), './server')
-        ]);
+    gulp.task('clean', function(cb) {
+        if (clean) {
+            return del([
+                path.resolve(process.cwd(), 'bundle.zip'),
+                path.resolve(process.cwd(), './dist'),
+                path.resolve(process.cwd(), './server')
+            ]);
+        } else {
+            cb();
+        }
     })
 
     gulp.task('invalidate-cache', "Invalidate the AWS Cloudfront", function() {
@@ -415,8 +422,7 @@ module.exports = (ENV) => {
             file = file.replace('src/', 'server/');
         }
 
-        return gulp.src(file)
-                    .pipe(clean({force:true}));
+        return del([file]);
     })
 
     gulp.task('watch', "Watch for file changes", ['copy-public','fontello-client', 'build-server'], function() {
