@@ -301,7 +301,7 @@ module.exports = (ENV, clean=true) => {
                 })
             })
             .then((version) => {
-                const environmentName = 'pairin-' + ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
+                const environmentName = argv.environmentName || 'pairin-' + ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
                 gutil.log('Upload', gutil.colors.blue(`Checking if the environment ${environmentName} exists`));
                 return new Promise((resolve, reject) => {
                     eb.describeEnvironments({
@@ -324,7 +324,7 @@ module.exports = (ENV, clean=true) => {
                 return new Promise((resolve, reject) => {
                     gutil.log('Upload', gutil.colors.blue(`Attempting to create new version ${version}`));
                     eb.createApplicationVersion({
-                        ApplicationName: ENV.ApplicationName,
+                        ApplicationName: argv.applicationName || ENV.ApplicationName,
                         VersionLabel: version,
                         SourceBundle: {
                             S3Bucket: 'pairin-deployments',
@@ -340,7 +340,7 @@ module.exports = (ENV, clean=true) => {
                 })
             })
             .then((version) => {
-                const environmentName = 'pairin-' + ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
+                const environmentName = argv.environmentName || 'pairin-' + ENV.EnvironmentName + (process.env.NODE_ENV !== 'production' ? '-' + process.env.NODE_ENV : '');
                 gutil.log('Upload', gutil.colors.blue(`Updating environment ${environmentName} to version ${version}`));
                 return new Promise((resolve, reject) => {
                     eb.updateEnvironment({
