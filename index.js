@@ -139,7 +139,9 @@ module.exports = (ENV, clean=true) => {
         }
 
         return webpackStream(config, webpack, function(err, stats) {
+            console.log("Err", err);
             if (err) {
+                console.log(err);
                 throw new gutil.PluginError("webpack", err);
             }
         })

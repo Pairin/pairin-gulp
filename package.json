@@ -1,6 +1,6 @@
 {
   "name": "pairin-gulp",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -23,17 +23,18 @@
     "babel-plugin-remove-imports": "https://github.com/sebmak/babel-plugin-remove-import/archive/1.0.0.tar.gz",
     "babel-plugin-replace-variable": "https://github.com/sebmak/babel-replace-variable/archive/1.0.0.tar.gz",
     "babel-plugin-transform-class-properties": "^6.22.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-react-constant-elements": "^6.22.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-2": "^6.22.0",
-    "extract-text-webpack-plugin": "^2.0.0-beta.5",
-    "sass-manifest-webpack-plugin": "https://github.com/Pairin/sass-manifest-webpack-plugin/archive/0.1.0.tar.gz",
-    "webpack": "^2.2.0",
     "css-loader": "^0.26.1",
+    "deepmerge": "^1.3.2",
     "del": "^2.2.2",
+    "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.9.0",
+    "flow-bin": "^0.42.0",
     "gulp": "^3.9.1",
     "gulp-archiver": "^1.0.0",
     "gulp-babel": "^6.1.2",
@@ -50,13 +51,12 @@
     "raw-loader": "^0.5.1",
     "run-sequence": "^1.2.2",
     "sass-loader": "^4.1.1",
+    "sass-manifest-webpack-plugin": "https://github.com/Pairin/sass-manifest-webpack-plugin/archive/0.1.0.tar.gz",
     "through2": "^2.0.3",
     "url-loader": "^0.5.7",
     "vinyl-named": "^1.1.0",
+    "webpack": "^2.2.1",
     "webpack-stream": "^3.2.0",
-    "yargs": "^6.6.0",
-    "babel-plugin-transform-flow-strip-types": "^6.22.0",
-    "deepmerge": "^1.3.2",
-    "flow-bin": "^0.42.0"
+    "yargs": "^6.6.0"
   }
 }
