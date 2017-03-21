@@ -16,6 +16,7 @@
                 "transform-react-constant-elements",
                 [
                     "replace-variable", {
+                        "__BASEURL__": "https://app.pairin.com"
                     }
                 ]
             ]
@@ -24,6 +25,7 @@
             "plugins": [
                 [
                     "replace-variable", {
+                        "__BASEURL__": "https://pairin-staging.herokuapp.com"
                     }
                 ]
             ]
@@ -32,6 +34,7 @@
             "plugins": [
                 [
                     "replace-variable", {
+                        "__BASEURL__": "http://localhost:3001"
                     }
                 ]
             ]
