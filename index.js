@@ -17,15 +17,22 @@ const empty = require('gulp-empty');
 const AWS_SDK = require('aws-sdk');
 const print = require('gulp-debug');
 const through2 = require('through2');
+const deepmerge = require('deepmerge');
 
 process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || 'development');
 
 const getBabelConfig = () => {
+    let userBabelRc = {};
     try {
-        return JSON.parse(fs.readFileSync(path.resolve(process.cwd(), '.babelrc'), "utf8"));
-    } catch (e) {
-        return {};
-    }
+        userBabelRc = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), '.babelrc'), "utf8"));
+    } catch (e) {}
+
+    let packageBabelRc = {};
+    try {
+        packageBabelRc = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.babelrc'), "utf8"));
+    } catch (e) {}
+
+    return deepmerge(packageBabelRc, userBabelRc);
 }
 
 module.exports = (ENV, clean=true) => {

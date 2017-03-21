@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Pairin/pairin-gulp#readme",
   "dependencies": {
-      "aws-sdk": "^2.12.0",
+    "aws-sdk": "^2.12.0",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-remove-imports": "https://github.com/sebmak/babel-plugin-remove-import/archive/1.0.0.tar.gz",
@@ -55,5 +55,10 @@
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^3.2.0",
     "yargs": "^6.6.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "deepmerge": "^1.3.2",
+    "flow-bin": "^0.42.0"
   }
 }
