@@ -139,9 +139,7 @@ module.exports = (ENV, clean=true) => {
         }
 
         return webpackStream(config, webpack, function(err, stats) {
-            console.log("Err", err);
             if (err) {
-                console.log(err);
                 throw new gutil.PluginError("webpack", err);
             }
         })
@@ -285,6 +283,11 @@ module.exports = (ENV, clean=true) => {
 
     gulp.task('upload',
         function(cb) {
+
+            if (argv.noUpload) {
+                cb();
+                return;
+            }
 
             const nextVersion = argv.version
                                 ? Promise.resolve(argv.version)
@@ -444,7 +447,7 @@ module.exports = (ENV, clean=true) => {
         return del([file]);
     })
 
-    gulp.task('watch', "Watch for file changes", ['copy-public','fontello-client', 'build-server'], function() {
+    gulp.task('watch', "Watch for file changes", ['copy-public','fontello-client', 'build-server', 'build-tests'], function() {
         let buildWatcher = gulp.watch(['src/**/*.{js,json}','src/*.{js,json}'], ['build-client']);
         gulp.watch('src/**/*.{less,scss,css,jpeg,jpg,png,gif}', ['build-client']);
         gulp.watch('fontello.json', ['fontello-client']);
