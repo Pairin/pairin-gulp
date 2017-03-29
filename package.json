@@ -23,6 +23,7 @@
     "babel-plugin-remove-imports": "https://github.com/sebmak/babel-plugin-remove-import/archive/1.0.0.tar.gz",
     "babel-plugin-replace-variable": "https://github.com/sebmak/babel-replace-variable/archive/1.0.0.tar.gz",
     "babel-plugin-transform-class-properties": "^6.22.0",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-es3-property-literals": "^6.22.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-react-constant-elements": "^6.22.0",

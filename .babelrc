@@ -9,7 +9,7 @@
             }
         }]
     ],
-    "plugins": ["transform-class-properties","transform-es3-property-literals"],
+    "plugins": ["transform-class-properties","transform-es3-property-literals","transform-es3-member-expression-literals"],
     "env": {
         "production": {
             "plugins": [
