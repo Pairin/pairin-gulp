@@ -19,7 +19,7 @@ const print = require('gulp-debug');
 const through2 = require('through2');
 const deepmerge = require('deepmerge');
 
-process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || 'development');
+process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || process.env.BUILD_ENV || 'development');
 
 const getBabelConfig = () => {
     let userBabelRc = {};
