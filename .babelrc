@@ -12,14 +12,7 @@
     "plugins": [
         "transform-class-properties",
         "transform-es3-property-literals",
-        "transform-es3-member-expression-literals",
-        [
-            "transform-runtime",
-            {
-              "polyfill": true,
-              "regenerator": true
-            }
-        ]
+        "transform-es3-member-expression-literals"
     ],
     "env": {
         "production": {

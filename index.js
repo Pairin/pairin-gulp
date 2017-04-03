@@ -204,6 +204,14 @@ module.exports = (ENV, clean=true) => {
             /\.(jpeg|jpg|png|gif|svg)$/
         ]]);
 
+        babelconfig.plugins.push([
+            "transform-runtime",
+            {
+              "polyfill": false,
+              "regenerator": true
+            }
+        ])
+
         return gulp.src(path.resolve(process.cwd(), file), { base: './src' })
                 .pipe(babel(babelconfig))
                 .on('error', handleError)
