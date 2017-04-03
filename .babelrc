@@ -9,7 +9,18 @@
             }
         }]
     ],
-    "plugins": ["transform-class-properties","transform-es3-property-literals","transform-es3-member-expression-literals"],
+    "plugins": [
+        "transform-class-properties",
+        "transform-es3-property-literals",
+        "transform-es3-member-expression-literals",
+        [
+            "transform-runtime",
+            {
+              "polyfill": false,
+              "regenerator": true
+            }
+        ]
+    ],
     "env": {
         "production": {
             "plugins": [
