@@ -37,7 +37,16 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+                options: {
+                    env: {
+                        production: {
+                            plugins: [
+                                path.resolve(__dirname, "./plugins/remove-devtools")
+                            ]
+                        }
+                    }
+                }
             },
             {
                 test: /\.(eot|ttf|woff|woff2)$/,

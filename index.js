@@ -208,6 +208,12 @@ module.exports = (ENV, clean=true) => {
             /\.(jpeg|jpg|png|gif|svg)$/
         ]]);
 
+        if (process.env.NODE_ENV !== 'development') {
+            babelconfig.plugins.push(
+                path.resolve(__dirname, "./plugins/remove-devtools")
+            );
+        }
+
         babelconfig.plugins.push([
             "transform-runtime",
             {
