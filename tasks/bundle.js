@@ -21,3 +21,7 @@ class Bundle extends Task {
         .pipe(this.gulp.dest(process.cwd()))
     }
 }
+
+module.exports = (gulp) => {
+    return (new Bundle(gulp)).toArray();
+}
