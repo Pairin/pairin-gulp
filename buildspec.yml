@@ -1,0 +1,18 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - echo Installing npm packages...
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - ./node_modules/.bin/gulp copy-public build
+  post_build:
+    commands:
+      - echo Running Tests on `date`
+      - ./node_modules/.bin/wdio wdio.conf.js
+artifacts:
+  files:
+    - results/**/*'
