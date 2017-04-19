@@ -1,4 +1,4 @@
-const Path = require('path');
+const path = require('path');
 const Task = require('./base-task.js');
 const archiver = require('gulp-archiver');
 
