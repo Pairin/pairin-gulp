@@ -1,6 +1,6 @@
 {
   "name": "pairin-gulp",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
     "babel-plugin-remove-imports": "https://github.com/sebmak/babel-plugin-remove-import/archive/1.0.0.tar.gz",
-    "babel-plugin-replace-variable": "https://github.com/sebmak/babel-replace-variable/archive/1.0.0.tar.gz",
+    "babel-plugin-replace-variable": "https://github.com/sebmak/babel-replace-variable/archive/1.1.0.tar.gz",
     "babel-plugin-transform-class-properties": "^6.23.0",
     "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-es3-property-literals": "^6.22.0",
