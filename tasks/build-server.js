@@ -5,6 +5,7 @@ const argv = require('yargs').argv;
 const babel = require('gulp-babel');
 const handleError = require('../util/handle-error.js');
 const getBabelConfig = require('../util/get-babel.js');
+const args = require('../util/args.js');
 
 class BuildServer extends Task {
     constructor(gulp) {
@@ -42,7 +43,8 @@ class BuildServer extends Task {
     }
 
     task() {
-        const file = argv.file || 'src/**/*.{js,json}';
+        console.log(args);
+        const file = argv.file || args.file || 'src/**/*.{js,json}';
 
         return this.gulp.src(path.resolve(process.cwd(), file), { base: './src' })
                 .pipe(babel(this.babelconfig()))

@@ -1,6 +1,7 @@
 const path = require('path');
 const Task = require('./base-task.js');
 const argv = require('yargs').argv;
+const args = require('../util/args.js');
 
 class Watch extends Task {
     constructor(gulp) {
@@ -16,7 +17,7 @@ class Watch extends Task {
         this.gulp.watch('public/**/*', ['copy-public']);
 
         buildWatcher.on('change', (event) => {
-            argv.file = event.path;
+            args.file = event.path;
 
             let run = ['build-server'];
 
@@ -25,6 +26,8 @@ class Watch extends Task {
             }
 
             this.gulp.start.apply(this.gulp, run);
+
+            delete args.file;
         })
     }
 
