@@ -13,7 +13,7 @@ class BuildServer extends Task {
         this.gulp = gulp;
     }
 
-    babelconfig() {
+    get babelconfig() {
         const babelconfig = getBabelConfig();
 
         babelconfig.presets = ["react", "es2015", "stage-2"];
@@ -43,11 +43,10 @@ class BuildServer extends Task {
     }
 
     task() {
-        console.log(args);
         const file = argv.file || args.file || 'src/**/*.{js,json}';
 
         return this.gulp.src(path.resolve(process.cwd(), file), { base: './src' })
-                .pipe(babel(this.babelconfig()))
+                .pipe(babel(this.babelconfig))
                 .on('error', handleError)
                 .pipe(this.gulp.dest(path.resolve(process.cwd(), 'server/')))
                 .pipe(print({title: 'Server Output'}));

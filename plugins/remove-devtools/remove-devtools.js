@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function({types: t}) {
-    console.log("Added");
     return {
         visitor: {
             ImportDeclaration: function (nodePath, state) {
