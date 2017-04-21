@@ -34,7 +34,7 @@ class BuildServer extends Task {
         ];
 
         if (process.env.NODE_ENV !== 'development') {
-            babelconfig.plugins.push(
+            babelconfig.plugins.unshift(
                 path.resolve(__dirname, "../plugins/remove-devtools")
             );
         }

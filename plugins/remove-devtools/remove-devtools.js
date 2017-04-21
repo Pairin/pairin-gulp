@@ -36,6 +36,14 @@ exports.default = function({types: t}) {
                                     block
                                 );
                                 path.replaceWith(func)
+                            } else if (path.parent.type === 'MemberExpression') {
+                                if (path.parentPath.parentPath.parentPath && path.parentPath.parentPath.parentPath.node.type === 'LogicalExpression') {
+                                    console.log('is logical')
+                                    //Replace with the right side operator
+                                    path.parentPath.parentPath.parentPath.replaceWith(path.parentPath.parentPath.parentPath.node.right)
+                                } else {
+                                    path.parentPath.parentPath.remove();
+                                }
                             }
                         }
                     }
