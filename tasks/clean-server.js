@@ -1,6 +1,7 @@
 const path = require('path');
 const Task = require('./base-task.js');
 const del = require('del');
+const args = require('../util/args.js');
 
 class CleanServer extends Task {
     constructor(gulp) {
@@ -9,9 +10,9 @@ class CleanServer extends Task {
     }
 
     task() {
-        let file = argv.file || 'server/**/*.{js,json}';
+        let file = args.file || 'server/**/*.{js,json}';
 
-        if (argv.file) {
+        if (args.file) {
             file = file.replace('src/', 'server/');
         }
 

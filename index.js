@@ -1,5 +1,6 @@
 const gulp = require('gulp-help')(require('gulp'), {hideEmpty: true});
 const argv = require('yargs').alias('e', 'env').array('env').argv;
+const args = require('./util/args.js');
 
 process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || process.env.BUILD_ENV || 'development');
 
@@ -9,6 +10,10 @@ if (argv.env && argv.env.length) {
 
         process.env[key] = val;
     })
+}
+
+for(var key in argv) {
+    args[key] = argv[key];
 }
 
 module.exports = (ENV) => {

@@ -25,9 +25,12 @@ class Watch extends Task {
                 run = ['clean-server'];
             }
 
-            this.gulp.start.apply(this.gulp, run);
-
-            delete args.file;
+            this.gulp.start(run, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+                delete args.file;
+            })
         })
     }
 
