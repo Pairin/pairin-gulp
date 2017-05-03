@@ -15,14 +15,14 @@ class UploadAssets extends Task {
 
     task() {
         return this.gulp.src(path.resolve(process.cwd(), './dist/**/*'))
-                .pipe(rename({
-                    dirname: `${process.env.NODE_ENV}/${process.env.EnvironmentName}/`
+                .pipe(rename((path) => {
+                    path.dirname = `${process.env.NODE_ENV}/${process.env.EnvironmentName}/${path.dirname}`
                 }))
                 .pipe(print({title: 'Upload Assets'}))
                 .pipe(through2.obj(function(file, enc, cb) {
                     s3.putObject({
                         Bucket: 'assets.pairin.com',
-                        Key: path.relative(path.resolve(process.cwd(), './dist'), file.path),
+                        Key: path.relative('dist/', file.path),
                         Body: file.contents,
                         ACL: 'public-read'
                     }, cb)
