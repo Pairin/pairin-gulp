@@ -8,12 +8,13 @@ const AWS_SDK = require('aws-sdk');
 const s3 = new AWS_SDK.S3();
 
 class UploadStyles extends Task {
-    constructor() {
+    constructor(gulp) {
         super('upload-styles', 'Upload the application styles')
+        this.gulp = gulp;
     }
 
     task() {
-        return gulp.src([
+        return this.gulp.src([
                     'src/**/*.{scss,css}',
                     `!*/variables.scss`
                 ])
@@ -33,5 +34,5 @@ class UploadStyles extends Task {
 }
 
 module.exports = (gulp) => {
-    return (new UploadStyles()).toArray();
+    return (new UploadStyles(gulp)).toArray();
 }

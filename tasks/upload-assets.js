@@ -8,12 +8,13 @@ const AWS_SDK = require('aws-sdk');
 const s3 = new AWS_SDK.S3();
 
 class UploadAssets extends Task {
-    constructor() {
+    constructor(gulp) {
         super('upload-assets', 'Upload the application assets')
+        this.gulp = gulp;
     }
 
     task() {
-        return gulp.src(path.resolve(process.cwd(), './dist/**/*'))
+        return this.gulp.src(path.resolve(process.cwd(), './dist/**/*'))
                 .pipe(rename({
                     dirname: `${process.env.NODE_ENV}/${process.env.EnvironmentName}/`
                 }))
@@ -30,5 +31,5 @@ class UploadAssets extends Task {
 }
 
 module.exports = (gulp) => {
-    return (new UploadAssets()).toArray();
+    return (new UploadAssets(gulp)).toArray();
 }

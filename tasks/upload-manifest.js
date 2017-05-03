@@ -8,12 +8,13 @@ const AWS_SDK = require('aws-sdk');
 const s3 = new AWS_SDK.S3();
 
 class UploadManifest extends Task {
-    constructor() {
+    constructor(gulp) {
         super('upload-manifest', 'Upload the application manifest')
+        this.gulp = gulp;
     }
 
     task() {
-        return gulp.src(path.resolve(process.cwd(), './sass-manifest.json'))
+        return this.gulp.src(path.resolve(process.cwd(), './sass-manifest.json'))
                     .pipe(rename(`pairin-${process.env.EnvironmentName}-manifest.${process.env.NODE_ENV}.json`))
                     .pipe(print({title: 'Upload Manifest'}))
                     .pipe(through2.obj(function(file, enc, cb) {
@@ -28,5 +29,5 @@ class UploadManifest extends Task {
 }
 
 module.exports = (gulp) => {
-    return (new UploadManifest()).toArray();
+    return (new UploadManifest(gulp)).toArray();
 }

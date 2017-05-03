@@ -7,7 +7,7 @@ const AWS_SDK = require('aws-sdk');
 
 const s3 = new AWS_SDK.S3();
 
-class UploadAssets extends Task {
+class Upload extends Task {
     constructor() {
         super('upload', 'Upload the Application')
     }
@@ -22,5 +22,5 @@ class UploadAssets extends Task {
 }
 
 module.exports = (gulp) => {
-    return (new UploadAssets()).toArray();
+    return (new Upload()).toArray();
 }

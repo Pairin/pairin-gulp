@@ -12,22 +12,18 @@ class Task {
         return {};
     }
 
+    task() {}
+
     toArray() {
-        const out = [
+        return [
             this.name,
             this.description,
-            this.dependencies
+            this.dependencies,
+            this.task.bind(this),
+            {
+                options: this.args
+            }
         ];
-
-        if (this.task) {
-            out.push(this.task.bind(this));
-        }
-
-        out.push({
-            options: this.args
-        })
-
-        return out;
     }
 }
 

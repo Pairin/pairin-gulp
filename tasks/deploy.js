@@ -1,14 +1,14 @@
 const Task = require('./base-task.js');
 
-const runSequence = require('run-sequence').use(gulp);
 
 class Deploy extends Task {
-    constructor() {
+    constructor(gulp) {
         super('deploy', 'Deploy the application')
+        this.runSequence = require('run-sequence').use(gulp);
     }
 
     task(cb) {
-        return runSequence(
+        return this.runSequence(
             'clean-server',
             'copy-public',
             'build',
@@ -21,5 +21,5 @@ class Deploy extends Task {
 }
 
 module.exports = (gulp) => {
-    return (new Deploy()).toArray();
+    return (new Deploy(gulp)).toArray();
 }

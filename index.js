@@ -32,14 +32,14 @@ module.exports = (ENV) => {
     /* Fontello         */ gulp.task(...(require('./tasks/fontello.js')(gulp)));
     /* Fontello Client  */ gulp.task(...(require('./tasks/fontello-client.js')(gulp)));
 
-    /* Upload           */ gulp.task(...(require('./task/upload.js')(gulp)));
-    /* Upload Manifest  */ gulp.task(...(require('./task/upload-manifest.js')(gulp)));
-    /* Upload Assets    */ gulp.task(...(require('./task/upload-assets.js')(gulp)));
-    /* Upload Styles    */ gulp.task(...(require('./task/upload-styles.js')(gulp)));
+    /* Upload           */ gulp.task(...(require('./tasks/upload.js')(gulp)));
+    /* Upload Manifest  */ gulp.task(...(require('./tasks/upload-manifest.js')(gulp)));
+    /* Upload Assets    */ gulp.task(...(require('./tasks/upload-assets.js')(gulp)));
+    /* Upload Styles    */ gulp.task(...(require('./tasks/upload-styles.js')(gulp)));
 
-    /* Deploy           */ gulp.task(...(require('./task/deploy.js')(gulp)));
+    /* Deploy           */ gulp.task(...(require('./tasks/deploy.js')(gulp)));
 
-    /* Invalidate Cache */ gulp.task(...(require('./task/invalidate-cache.js')(gulp)));
+    /* Invalidate Cache */ gulp.task(...(require('./tasks/invalidate-cache.js')(gulp)));
 
     /* Watch            */ gulp.task(...(require('./tasks/watch.js')(gulp)));
 
