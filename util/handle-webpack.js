@@ -36,8 +36,6 @@ module.exports = function() {
         );
 
         config.devtool = 'source-map';
-    } else {
-        config.devtool = 'eval-source-map';
     }
 
     return webpackStream(config, webpack, function(err, stats) {
