@@ -66,7 +66,8 @@ module.exports = {
         ]
     },
     externals: {
-        mysql: 'mysql'
+        mysql: 'mysql',
+        redis: 'redis'
     },
     resolve: {
         modules: [
