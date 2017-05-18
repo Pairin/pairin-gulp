@@ -5,14 +5,18 @@
         "stage-2",
         ["env", {
             "targets": {
-                "browsers": ["last 2 versions"]
+                "browsers": ["last 3 versions"]
             }
         }]
     ],
     "plugins": [
         "transform-class-properties",
         "transform-es3-property-literals",
-        "transform-es3-member-expression-literals"
+        "transform-es3-member-expression-literals",
+        ["transform-runtime", {
+            "polyfill": false,
+            "regenerator": true
+        }]
     ],
     "env": {
         "production": {
