@@ -45,7 +45,7 @@ class BuildServer extends Task {
     task() {
         const file = argv.file || args.file || 'src/**/*.{js,json}';
 
-        return this.gulp.src(path.resolve(process.cwd(), file), { base: './src' })
+        return this.gulp.src([path.resolve(process.cwd(), file), '!src/public', '!src/public/**'], { base: './src' })
                 .pipe(babel(this.babelconfig))
                 .on('error', handleError)
                 .pipe(this.gulp.dest(path.resolve(process.cwd(), 'server/')))
