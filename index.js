@@ -24,6 +24,7 @@ module.exports = (ENV) => {
 
     /* Build            */ gulp.task(...(require('./tasks/build-task.js')(gulp)));
     /* Build Client     */ gulp.task(...(require('./tasks/build-client.js')(gulp)));
+    /* Build Client     */ gulp.task(...(require('./tasks/build-worker.js')(gulp)));
     /* Build Server     */ gulp.task(...(require('./tasks/build-server.js')(gulp)));
     /* Bundle           */ gulp.task(...(require('./tasks/bundle.js')(gulp)));
     /* Clean Server     */ gulp.task(...(require('./tasks/clean-server.js')(gulp)));

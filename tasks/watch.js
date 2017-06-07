@@ -10,9 +10,10 @@ class Watch extends Task {
     }
 
     task() {
-        let buildWatcher = this.gulp.watch(['src/**/*.{js,json}','src/*.{js,json}'], ['build-client']);
+        let buildWatcher = this.gulp.watch(['src/**/*.{js,json}','src/*.{js,json}', '!src/worker.js'], ['build-client']);
 
-        this.gulp.watch('src/**/*.{less,scss,css,jpeg,jpg,png,gif}', ['build-client']);
+        this.gulp.watch(['src/**/*.{less,scss,css,jpeg,jpg,png,gif}','src/*.{less,scss,css,jpeg,jpg,png,gif}'], ['build-client']);
+        this.gulp.watch('src/worker.js', ['build-worker']);
         this.gulp.watch('fontello.json', ['fontello-client']);
         this.gulp.watch('public/**/*', ['copy-public']);
 
@@ -35,7 +36,7 @@ class Watch extends Task {
     }
 
     get dependencies() {
-        return ['copy-public','fontello-client', 'build-server'];
+        return ['copy-public','fontello-client', 'build-server', 'build-worker'];
     }
 }
 

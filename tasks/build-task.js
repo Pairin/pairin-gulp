@@ -15,7 +15,8 @@ class BuildTask extends Task {
         return [
             'copy-public',
             'build-client',
-            'build-server'
+            'build-server',
+            'build-worker'
         ]
     }
 }

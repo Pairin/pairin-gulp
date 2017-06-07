@@ -5,7 +5,7 @@ const fs = require('fs');
 
 module.exports = {
     output: {
-        library: 'Pairin',
+        library: '[name]',
         libraryTarget: 'var'
     },
     module: {
