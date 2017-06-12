@@ -5,33 +5,44 @@ const named = require('vinyl-named');
 const handleWebpack = require('../util/handle-webpack.js');
 const handleError = require('../util/handle-error.js');
 const argv = require('yargs').argv;
-const map = require('map-stream');
+const Stream = require('stream');
 
-const setFileName = map((data, cb) => {
-    const name = path.basename(data.path, path.extname(data.path));
-    switch (name) {
-        case 'client':
-            data.named = 'Pairin';
-            break;
-        default:
-            data.named = `Pairin_${name}`;
+const setFileName = () => {
+    const stream = new Stream.Transform({objectMode: true});
+
+    stream._transform = (data, unused, cb) => {
+        const name = path.basename(data.path, path.extname(data.path));
+        switch (name) {
+            case 'client':
+                data.named = 'Pairin';
+                break;
+            default:
+                data.named = `Pairin_${name}`;
+        }
+        cb(null, data);
     }
-    cb(null, data);
-})
 
-const cleanFileName = map((data, cb) => {
-    const name = path.basename(data.path, path.extname(data.path));
-    switch (name) {
-        case 'Pairin':
-            data.named = 'client';
-            break;
-        default:
-            data.named = name.replace(/^Pairin_/, '');
+    return stream;
+}
+const cleanFileName = () => {
+    const stream = new Stream.Transform({objectMode: true});
+
+    stream._transform = (data, unused, cb) => {
+        const name = path.basename(data.path, path.extname(data.path));
+        switch (name) {
+            case 'Pairin':
+                data.named = 'client';
+                break;
+            default:
+                data.named = name.replace(/^Pairin_/, '');
+        }
+        data.path = path.resolve(path.dirname(data.path), data.named + path.extname(data.path));
+
+        cb(null, data);
     }
-    data.path = path.resolve(path.dirname(data.path), data.named + path.extname(data.path));
 
-    cb(null, data);
-})
+    return stream;
+}
 
 class BuildClient extends Task {
     constructor(gulp) {
@@ -44,9 +55,9 @@ class BuildClient extends Task {
     task() {
         return this.gulp.src([path.resolve(process.cwd(), 'src/client.js')])
             // .pipe(named())
-            .pipe(setFileName)
+            .pipe(setFileName())
             .pipe(handleWebpack())
-            .pipe(cleanFileName)
+            .pipe(cleanFileName())
             .on('error', handleError)
             .pipe(this.gulp.dest(path.resolve(process.cwd(), 'dist/')))
             .pipe(print({title: 'Client Output'}));
