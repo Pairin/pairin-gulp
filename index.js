@@ -1,20 +1,18 @@
 const gulp = require('gulp-help')(require('gulp'), {hideEmpty: true});
-const argv = require('yargs').alias('e', 'env').array('env').argv;
+const argv = require('yargs').alias('e', 'env').default('env', '__VERSION__=dev').array('env').argv;
 const args = require('./util/args.js');
 
+//Set the command line arguments
+const a = {};
+argv.env.forEach((arg) => {
+    const [key,val] = arg.split('=', 2);
+    a[key] = val;
+});
+argv.env = a;
+
+argv.env.__VERSION__ = argv.env.__VERSION__ || 'dev';
+
 process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || process.env.BUILD_ENV || 'development');
-
-if (argv.env && argv.env.length) {
-    argv.env.forEach((arg) => {
-        const [key,val] = arg.split('=',2);
-
-        process.env[key] = val;
-    })
-}
-
-for(var key in argv) {
-    args[key] = argv[key];
-}
 
 module.exports = (ENV) => {
 
@@ -22,9 +20,9 @@ module.exports = (ENV) => {
         process.env[key] = ENV[key];
     }
 
-    if (!process.env.__VERSION__) {
-        process.env.__VERSION__ == 'development';
-    }
+    process.env = Object.assign({}, process.env, argv.env);
+
+    console.log(process.env, argv.env);
 
     /* Build            */ gulp.task(...(require('./tasks/build-task.js')(gulp)));
     /* Build Client     */ gulp.task(...(require('./tasks/build-client.js')(gulp)));
