@@ -22,8 +22,6 @@ module.exports = (ENV) => {
 
     process.env = Object.assign({}, process.env, argv.env);
 
-    console.log(process.env, argv.env);
-
     /* Build            */ gulp.task(...(require('./tasks/build-task.js')(gulp)));
     /* Build Client     */ gulp.task(...(require('./tasks/build-client.js')(gulp)));
     /* Build Client     */ gulp.task(...(require('./tasks/build-worker.js')(gulp)));
