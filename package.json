@@ -1,6 +1,6 @@
 {
   "name": "pairin-gulp",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,7 @@
   "bugs": {
     "url": "https://github.com/Pairin/pairin-gulp/issues"
   },
+  "engines" : { "node" : ">=8.0.0" },
   "homepage": "https://github.com/Pairin/pairin-gulp#readme",
   "dependencies": {
     "aws-sdk": "^2.12.0",

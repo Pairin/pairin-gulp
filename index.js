@@ -22,6 +22,10 @@ module.exports = (ENV) => {
         process.env[key] = ENV[key];
     }
 
+    if (!process.env.__VERSION__) {
+        process.env.__VERSION__ == 'development';
+    }
+
     /* Build            */ gulp.task(...(require('./tasks/build-task.js')(gulp)));
     /* Build Client     */ gulp.task(...(require('./tasks/build-client.js')(gulp)));
     /* Build Client     */ gulp.task(...(require('./tasks/build-worker.js')(gulp)));
