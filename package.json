@@ -1,6 +1,6 @@
 {
   "name": "pairin-gulp",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,9 @@
   "bugs": {
     "url": "https://github.com/Pairin/pairin-gulp/issues"
   },
-  "engines" : { "node" : ">=8.0.0" },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "homepage": "https://github.com/Pairin/pairin-gulp#readme",
   "dependencies": {
     "aws-sdk": "^2.12.0",
@@ -59,6 +61,7 @@
     "run-sequence": "^1.2.2",
     "sass-loader": "^4.1.1",
     "sass-manifest-webpack-plugin": "https://github.com/Pairin/sass-manifest-webpack-plugin/archive/0.1.0.tar.gz",
+    "svg-inline-loader": "^0.7.1",
     "through2": "^2.0.3",
     "url-loader": "^0.5.7",
     "vinyl-named": "^1.1.0",
