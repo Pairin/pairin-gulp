@@ -24,6 +24,7 @@ class BuildServer extends Task {
                 /\.(less|css|sass|scss)$/,
                 /\.(jpeg|jpg|png|gif|svg)$/
             ]],
+            ['inline-json-import'],
             [
                 "transform-runtime",
                 {

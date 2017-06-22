@@ -425,6 +425,12 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-inline-json-import@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-inline-json-import/-/babel-plugin-inline-json-import-0.2.1.tgz#7b84686c45539b13acd0c0f1cadd38b0cb6e12f1"
+  dependencies:
+    decache "^4.1.0"
+
 "babel-plugin-remove-imports@https://github.com/sebmak/babel-plugin-remove-import/archive/1.0.0.tar.gz":
   version "1.0.0"
   resolved "https://github.com/sebmak/babel-plugin-remove-import/archive/1.0.0.tar.gz#af45006b70856e61754c1c2e67546e10f2636aad"
@@ -1084,6 +1090,10 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
+callsite@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/callsite/-/callsite-1.0.0.tgz#280398e5d664bd74038b6f0905153e6e8af1bc20"
+
 camelcase-keys@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/camelcase-keys/-/camelcase-keys-2.1.0.tgz#308beeaffdf28119051efa1d932213c91b8f92e7"
@@ -1520,6 +1530,12 @@ debug@^2.1.1, debug@^2.1.2, debug@^2.2.0:
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.7.tgz#92bad1f6d05bbb6bba22cca88bcd0ec894c2861e"
   dependencies:
     ms "2.0.0"
+
+decache@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/decache/-/decache-4.1.0.tgz#2037d5edf756dda230c85023659e7c3d1d6e0105"
+  dependencies:
+    callsite "^1.0.0"
 
 decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
