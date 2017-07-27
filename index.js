@@ -12,7 +12,7 @@ argv.env = a;
 
 argv.env.__VERSION__ = argv.env.__VERSION__ || 'dev';
 
-process.env.NODE_ENV = process.env.BABLE_ENV = (argv.environment || process.env.BUILD_ENV || 'development');
+process.env.NODE_ENV = process.env.BABEL_ENV = (argv.environment || process.env.BUILD_ENV || 'development');
 
 module.exports = (ENV) => {
 
