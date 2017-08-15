@@ -28,7 +28,15 @@ module.exports = {
                         {
                             loader: 'sass-loader',
                             options: {
-                                includePaths: [path.resolve(process.cwd(), './src')]
+                                includePaths: [path.resolve(process.cwd(), './src')],
+                                importer: function(url, prev, done) {
+                                    url = path.extname(url) === '' ? url + '.scss' : url;
+                                    fs.appendFile('/tmp/sass_manifest', url + '\n', 'utf8', function() {
+                                        done({
+                                            file: url
+                                        })
+                                    });
+                                }
                             }
                         }
                     ]

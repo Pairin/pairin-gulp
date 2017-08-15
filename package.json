@@ -1,6 +1,6 @@
 {
   "name": "pairin-gulp",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -61,7 +61,7 @@
     "raw-loader": "^0.5.1",
     "run-sequence": "^1.2.2",
     "sass-loader": "^4.1.1",
-    "sass-manifest-webpack-plugin": "https://github.com/Pairin/sass-manifest-webpack-plugin/archive/0.1.0.tar.gz",
+    "sass-manifest-webpack-plugin": "https://github.com/Pairin/sass-manifest-webpack-plugin/archive/0.1.1.tar.gz",
     "svg-inline-loader": "^0.7.1",
     "through2": "^2.0.3",
     "url-loader": "^0.5.7",
