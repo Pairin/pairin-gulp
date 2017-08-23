@@ -3,6 +3,8 @@ const path = require('path');
 const SassManifest = require('sass-manifest-webpack-plugin');
 const fs = require('fs');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
     output: {
         library: '[name]',
@@ -93,6 +95,18 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin({ filename: '[name].css', disable: false, allChunks: true }),
-        new SassManifest({filename: path.resolve(process.cwd(), './sass-manifest.json')})
+        new SassManifest({filename: path.resolve(process.cwd(), './sass-manifest.json')}),
+        new HtmlWebpackPlugin({
+            title: 'Pairin Internal Admin',
+            inject:false,
+            mobile: true,
+            template: 'index.ejs',
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                conservativeCollapse: true,
+                preserveLineBreaks: true
+            }
+        })
     ]
 }
